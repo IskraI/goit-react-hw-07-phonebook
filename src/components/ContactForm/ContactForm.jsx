@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/contacts/contactsSlice';
+// import { addContact } from 'redux/contactsSlice';
 
 const ContactForm = () => {
   //store
@@ -48,7 +48,7 @@ const ContactForm = () => {
       );
     }
 
-    dispatch(addContact(dataForm));
+    // dispatch(addContact(dataForm));
 
     reset();
   };

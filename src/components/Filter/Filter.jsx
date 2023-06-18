@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { filterContacts } from '../../redux/filter/filterSlice';
+import { filterContacts } from '../../redux/filterSlice';
 import css from './Filter.module.css';
 // import PropTypes from 'prop-types';
 
@@ -20,7 +20,7 @@ const Filter = () => {
           autoComplete="off"
           // required
           // value={value}
-          onChange={e => dispatch(filterContacts(e.target.value))}
+          // onChange={e => dispatch(filterContacts(e.target.value))}
         />
       </label>
     </form>
