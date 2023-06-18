@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-// import { addContact } from 'redux/contactsSlice';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/operation';
+import { selectContacts } from '../../redux/selector';
 const ContactForm = () => {
   //store
-  const contacts = useSelector(state => state.contacts);
+
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
   //local state onchange form
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setNumber] = useState('');
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -20,7 +21,7 @@ const ContactForm = () => {
         setName(value);
         break;
 
-      case 'number':
+      case 'phone':
         setNumber(value);
         break;
 
@@ -31,7 +32,7 @@ const ContactForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const dataForm = { name, number };
+    const dataForm = { name, phone };
 
     if (
       contacts.some(
@@ -41,14 +42,14 @@ const ContactForm = () => {
       return alert(`Contact with name "${name}" is already in contacts`);
     }
 
-    const existNumber = contacts.find(el => el.number === number);
+    const existNumber = contacts.find(el => el.phone === phone);
     if (existNumber) {
       return alert(
-        `Contact with number ${existNumber.number} is already in  ${existNumber.name}`
+        `Contact with number ${existNumber.phone} is already in  ${existNumber.name}`
       );
     }
 
-    // dispatch(addContact(dataForm));
+    dispatch(addContact(dataForm));
 
     reset();
   };
@@ -67,8 +68,8 @@ const ContactForm = () => {
           type="text"
           name="name"
           // pattern="^[a-zA-Z0-9_.\-]+[\\\|\s]?[a-zA-Z0-9_.\-]+$"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          pattern="^[А-Яа-яЁёa-zA-Z\s]+$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer"
           required
           value={name}
           onChange={handleChange}
@@ -79,12 +80,12 @@ const ContactForm = () => {
         <input
           className={css.input__data}
           type="tel"
-          name="number"
+          name="phone"
           // pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be min 5 digits and can contain spaces, dashes, parentheses and can start with +"
+          pattern="\+?[0-9\s\-\(\)]+"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
+          value={phone}
           onChange={handleChange}
         />
       </label>

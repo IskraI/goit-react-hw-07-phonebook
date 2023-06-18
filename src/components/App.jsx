@@ -13,7 +13,7 @@ import {
 
 const App = () => {
   const contacts = useSelector(selectContacts);
-  const loading = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
   const dispatch = useDispatch();
@@ -34,11 +34,16 @@ const App = () => {
         </>
       )}
 
-      {loading && !error && <b>Request in progress...</b>}
+      {isLoading && !error && (
+        <>
+          <br />
+          <b>Waiting...</b>
+        </>
+      )}
 
       {error && <p>{error}</p>}
 
-      {!loading && !error && contacts.length === 0 && (
+      {!isLoading && !error && contacts.length === 0 && (
         <p>There is no contacts yet.</p>
       )}
     </div>

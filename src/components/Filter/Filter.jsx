@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFilter } from '../../redux/selector';
 import { filterContacts } from '../../redux/filterSlice';
 import css from './Filter.module.css';
 // import PropTypes from 'prop-types';
 
 const Filter = () => {
   const dispatch = useDispatch();
+  const filter = useSelector(selectFilter);
 
   return (
     <form className={css.form}>
@@ -14,13 +16,13 @@ const Filter = () => {
         <input
           className={css.input__data}
           type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          name="filter"
+          pattern="^[А-Яа-яЁёa-zA-Z\s]+$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           autoComplete="off"
           // required
-          // value={value}
-          // onChange={e => dispatch(filterContacts(e.target.value))}
+          value={filter}
+          onChange={e => dispatch(filterContacts(e.target.value))}
         />
       </label>
     </form>
